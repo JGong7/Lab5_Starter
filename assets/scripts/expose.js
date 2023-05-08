@@ -5,6 +5,8 @@ var image;
 var audio;
 var sound;
 var soundImage;
+var button;
+var jsConfetti = new JSConfetti();
 function change(){
   if (select.value === "air-horn"){
     image.src = "assets/images/air-horn.svg";
@@ -20,16 +22,22 @@ function change(){
 function changeAudio(){
   if (sound.value == 0){
     soundImage.src = "assets/icons/volume-level-0.svg";
-    sound.volume = (sound.value / 100);
+    audio.volume = (sound.value / 100);
   }else if (sound.value <= 32){
     soundImage.src = "assets/icons/volume-level-1.svg";
-    sound.volume = (sound.value / 100);
+    audio.volume = (sound.value / 100);
   }else if (sound.value <= 66){
     soundImage.src = "assets/icons/volume-level-2.svg";
-    sound.volume = (sound.value / 100);
+    audio.volume = (sound.value / 100);
   }else{
     soundImage.src = "assets/icons/volume-level-3.svg";
-    sound.volume = (sound.value / 100);
+    audio.volume = (sound.value / 100);
+  }
+}
+function play(){
+  audio.play();
+  if (select.value === "party-horn"){ 
+    jsConfetti.addConfetti();
   }
 }
 window.addEventListener('DOMContentLoaded', init);
@@ -38,10 +46,12 @@ function init() {
   select = document.getElementById("horn-select");
   image = document.querySelector("header + img");
   audio = document.querySelector("audio");
+  button = document.querySelector("button");
   sound = document.getElementById('volume');
-  sound.volume = 0.5;
+  audio.volume = 0.5;
   soundImage = document.querySelector("div > img");
-  console.log(soundImage);
+  console.log(button);
   select.addEventListener('change', change);
   sound.addEventListener('input', changeAudio);
+  button.addEventListener('click', play);
 }
